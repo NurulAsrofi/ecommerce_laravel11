@@ -13,7 +13,7 @@
                 </div>
             </div>
 
-            <a href="#" class="btn btn-icon icon-left btn-primary">
+            <a href="{{ route('product.create') }}" class="btn btn-icon icon-left btn-primary">
                 <i class="fas fa-plus"></i> Produk
             </a>
 
@@ -24,7 +24,8 @@
                             <th>#</th>
                             <th>Nama Produk</th>
                             <th>Harga Produk</th>
-                            <th>Stok</th>
+                            <th>Diskon</th>
+                            <th>Harga Setelah Diskon</th>
                             <th>Action</th>
                         </tr>
                         @php
@@ -32,13 +33,31 @@
                         @endphp
                         @forelse ($products as $item)
                             <tr>
+                                <td>{{ $no += 1 }}</td>
                                 <td>{{ $item->name }}</td>
                                 <td>{{ $item->price }} Points</td>
-                                <td>{{ $item->stock }}</td>
                                 <td>
-                                    <a href="#" class="badge badge-info">Detail</a>
-                                    <a href="#" class="badge badge-warning">Edit</a>
-                                    <a href="" class="badge badge-danger">Hapus</a>
+                                    {{ $item->discount ? $item->discount . '%' : 'Tidak ada diskon' }}
+                                </td>
+                                <td>
+                                 @if($item->discount)
+                                    {{ $item->price - ($item->price * $item->discount / 100) }} Points
+                                 @else
+                                    {{ $item->price }} Points
+                                @endif
+                                </td>
+                                <td>
+                                    <a href="{{ route('product.detail', $item->id) }}" class="badge badge-info">Detail</a>
+                                    <a href="{{ route('product.edit', $item->id) }}" class="badge badge-warning">Edit</a>
+                                    <form action="{{ route('product.delete', $item->id) }}" method="POST"
+                                        style="display: inline-block;">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="badge badge-danger"
+                                            onclick="return confirm('Are you sure you want to delete this product?')">
+                                            Hapus
+                                        </button>
+                                    </form>
                                 </td>
                             </tr>
                         @empty

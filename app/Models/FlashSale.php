@@ -9,12 +9,12 @@ use Illuminate\Support\Facades\Validator;
 use RealRashid\SweetAlert\Facades\Alert;
 use Illuminate\Support\Facades\File;
 
-class Product extends Model
+class FlashSale extends Model
 {
-    use HasFactory;
+    protected $fillable = ['product_id', 'discount_price', 'start_date', 'end_date'];
 
-    protected $fillable = [
-        'id_distributor', 'name', 'price', 'category', 'description', 'image', 'discount'
-    ];
-
+    public function product()
+    {
+        return $this->belongsTo(Product::class);
+    }
 }
