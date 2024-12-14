@@ -34,6 +34,7 @@
                                     Harga: {{ $product->price }} Points
                                 @endif
                         </h2>
+                        <h3><a href="#">Harga: {{ $data->price }} Points</a></h3>
                     </div>
                     <hr>
                     <p>

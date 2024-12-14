@@ -26,6 +26,7 @@
                             <th>Harga Produk</th>
                             <th>Diskon</th>
                             <th>Harga Setelah Diskon</th>
+                            <th>Nama Distributor</th>
                             <th>Action</th>
                         </tr>
                         @php
@@ -36,15 +37,16 @@
                                 <td>{{ $no += 1 }}</td>
                                 <td>{{ $item->name }}</td>
                                 <td>{{ $item->price }} Points</td>
+                                <td>{{ $item->nama_distributor }}</td>
                                 <td>
                                     {{ $item->discount ? $item->discount . '%' : 'Tidak ada diskon' }}
                                 </td>
                                 <td>
-                                 @if($item->discount)
-                                    {{ $item->price - ($item->price * $item->discount / 100) }} Points
-                                 @else
-                                    {{ $item->price }} Points
-                                @endif
+                                    @if ($item->discount)
+                                        {{ $item->price - ($item->price * $item->discount) / 100 }} Points
+                                    @else
+                                        {{ $item->price }} Points
+                                    @endif
                                 </td>
                                 <td>
                                     <a href="{{ route('product.detail', $item->id) }}" class="badge badge-info">Detail</a>

@@ -24,6 +24,16 @@
                 @csrf 
                 <div class="card-body"> 
                     <div class="row"> 
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label for="id_distributor">Nama Distributor</label>
+                                <select name="id_distributor" class="form-control">
+                                    @foreach ($distributor as $item)
+                                        <option value="{{ $item->id }}">{{ $item->nama_distributor }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
                         <div class="col-6"> 
                             <div class="form-group"> 
                                 <label for="name">Nama Produk</label> 

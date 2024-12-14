@@ -5,7 +5,7 @@ namespace App\Http\Controllers\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Product;
-use App\Models\Users;
+use App\Models\User;
 use RealRashid\SweetAlert\Facades\Alert;
 
 class UserController extends Controller
@@ -17,19 +17,26 @@ class UserController extends Controller
         return view('pages.user.index', compact('products'));
     }
 
-    public function detail_product($id) 
+    public function fs()
+    {
+        $products = Product::where('discount', '>', 0)->get(); // Get products with discounts
+
+        return view('pages.user.fs', compact('products'));
+    }
+
+    public function detail_product($id)
     {
         $product = Product::findOrFail($id);
 
         return view('pages.user.detail', compact('product'));
     }
 
-    public function purchase($productId, $userId) 
+    public function purchase($productId, $userId)
     {
         $product = Product::findOrFail($productId);
         $user = User::findOrFail($userId);
 
-        if ($user->point >= $product->price) {
+        if ($user->point > $product->price) {
             $totalPoints = $user->point - $product->price;
 
             $user->update([
@@ -43,11 +50,4 @@ class UserController extends Controller
             return redirect()->back();
         }
     }
-
-    public function show($id)
-    {
-        $user = User::find($id); // Mengambil data user berdasarkan ID
-        return view('user.show', compact('user'));
-    }
-
 }
